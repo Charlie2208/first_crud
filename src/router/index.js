@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import CrudView from '../views/CrudView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import LoginView from '../views/LoginView.vue'
+import { currentUserPromise } from '../firebase'
 
 Vue.use(VueRouter)
 
@@ -16,7 +17,10 @@ const routes = [
   {
     path: '/crud',
     name: 'crud',
-    component: CrudView
+    component: CrudView,
+    meta: {
+      auth: true
+    }
   },
   {
     path: '/register',
@@ -35,6 +39,25 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach(async (to, from, next) => {
+  console.log("entraste al beforEach");
+
+  const requireAuth = to.meta.auth
+  const user = await currentUserPromise()
+
+  if (requireAuth) {
+    if (user) {
+
+      next();
+    } else {
+      console.log("no existe el usuario")
+      next("/login")
+    }
+  } else {
+    next()
+  }
 })
 
 export default router
