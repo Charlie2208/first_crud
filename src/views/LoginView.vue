@@ -12,7 +12,7 @@
           <v-text-field
             v-model="user.password"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-            :rules="[passwordRules]"
+            :rules="passwordRules"
             :type="show1 ? 'text' : 'password'"
             name="input-10-1"
             label="password"

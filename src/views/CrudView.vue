@@ -100,7 +100,12 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["add_dessert", "delete_dessert", "update_dessert"]),
+    ...mapActions([
+      "add_dessert",
+      "delete_dessert",
+      "update_dessert",
+      "get_desserts",
+    ]),
     addDessertForm() {
       this.add_dessert({ ...this.dessert });
       this.dessert = {};
@@ -121,10 +126,13 @@ export default {
   computed: {
     ...mapState(["desserts"]),
   },
+  created() {
+    this.get_desserts();
+  },
 };
 </script>
 <style>
-.h-1{
-    color: #5E35B1;
+.h-1 {
+  color: #5e35b1;
 }
 </style>
